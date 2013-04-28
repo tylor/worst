@@ -15,8 +15,8 @@
     <div class="footer">Let's just get along!</div>
     <script src="jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-    var totalArticles = 30;
-    var age = 4;
+    var totalArticles = 50;
+    var age = 1;
     $.ajax({
       url: 'http://sitelife.cbc.ca/ver1.0/sdk/js/tags/REL-5.3.10.CBC.Hotfix.2?jsonRequest=%7B%22Envelopes%22%3A%5B%7B%22Payload%22%3A%7B%22Activity%22%3A%22Commented%22%2C%22Age%22%3A' + age + '%2C%22Categories%22%3A%5B%7B%22Name%22%3A%22all%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoveryCategory%22%7D%5D%2C%22LimitToContributors%22%3A%5B%22Editor%22%2C%22Staff%22%2C%22Trusted%22%2C%22Standard%22%5D%2C%22MaximumNumberOfDiscoveries%22%3A' + totalArticles + '%2C%22ObjectType%22%3A%22Requests.Discovery.DiscoverContentActionRequest%22%2C%22Sections%22%3A%5B%7B%22Name%22%3A%22world%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22canada%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22politics%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22business%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22health%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22arts%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22technology%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%5D%2C%22Type%22%3A%22Article%22%7D%2C%22PayloadType%22%3A%22Requests.Discovery.DiscoverContentActionRequest%22%7D%5D%2C%22Metadata%22%3Anull%2C%22ObjectType%22%3A%22Requests.RequestBatch%22%7D',
       dataType: 'jsonp',
@@ -30,7 +30,8 @@
     })
     .done(function(body) {
       body.Envelopes[0].Payload.DiscoveredContent.sort(function(a, b) {
-        return b.Comments.NumberOfComments - a.Comments.NumberOfComments;
+        // return b.Comments.NumberOfComments - a.Comments.NumberOfComments;
+        return b.ArticleKey.Key - a.ArticleKey.Key;
       });
       $.each(body.Envelopes[0].Payload.DiscoveredContent, function(i, article) {
         var $element = $([
