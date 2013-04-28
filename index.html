@@ -1,7 +1,7 @@
 <!doctype html>
   <head>
-    <title>We Disagree</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>We Disagree | The most negative comments on top commented CBC articles in the past few days</title>
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -39,7 +39,7 @@
             '<div class="meta"></div>',
             '<div class="comment loading"></div>',
           '</div>',
-        ].join("\n"));
+        ].join(''));
         $('#articles').append($element);
         var $meta = $element.find('.meta');
         var $comment = $element.find('.comment');
@@ -58,11 +58,10 @@
         })
         .done(function(body) {
           var date = new Date(body.Envelopes[0].Payload.Items[0].PostedAtTime.split('|')[1]);
-          var months = ['Jan','Feb','March','April','May','June','July', 'August', 'Sept', 'Oct', 'Nov', 'Dec'];
+          var months = ['January','February','March','April','May','June','July', 'August', 'September', 'October', 'November', 'December'];
           var meta = [
-            '<span class="score">',
-              '<span class="positive">+' + body.Envelopes[0].Payload.Items[0].ScoreData.PositiveScore + '</span> / <span class="negative">-' + body.Envelopes[0].Payload.Items[0].ScoreData.NegativeScore + '</span>',
-            '</span>',
+            '<span class="positive">+' + body.Envelopes[0].Payload.Items[0].ScoreData.PositiveScore + '</span> / ',
+            '<span class="negative">-' + body.Envelopes[0].Payload.Items[0].ScoreData.NegativeScore + '</span>',
             '<span class="comments">' + body.Envelopes[0].Payload.Items[0].Parent.Comments.NumberOfComments + ' comments</span>',
             '<span class="posted">' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</span>',
           ].join('');
