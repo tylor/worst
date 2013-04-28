@@ -15,9 +15,7 @@ h1 {
 h2 {
   font-size: 1em;
   margin: 0;
-  /*margin-left: 115px;*/
   margin-bottom: 0.5em;
-  /*text-overflow: ellipsis;*/
   white-space: nowrap;
 }
 .title {
@@ -41,7 +39,10 @@ h2 {
   h2 {
     white-space: normal;
   }
-  .subtitle { display: inline; font-size: 0.5em; }
+  .subtitle {
+    display: inline;
+    font-size: 0.5em;
+  }
 }
 a {
   color: #125379;
