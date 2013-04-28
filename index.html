@@ -6,16 +6,16 @@
   </head>
   <body>
     <div class="wrap">
-      <h1>We Disagree
-        <span class="subtitle">The most negative comments on top commented <br>CBC articles in the past few days.</span>
+      <h1><span class="title">We Disagree</span>
+        <span class="subtitle">The most negative comments on top commented </span><span class="subtitle">CBC articles in the past few days.</span>
       </h1>
       <div id="articles" class="loading">
       </div>
     </div>
-    <div class="footer">Let's just get along!</div>
-    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript">
-    var totalArticles = 50;
+    // var totalArticles = 50;
+    var totalArticles = 30;
     var age = 1;
     $.ajax({
       url: 'http://sitelife.cbc.ca/ver1.0/sdk/js/tags/REL-5.3.10.CBC.Hotfix.2?jsonRequest=%7B%22Envelopes%22%3A%5B%7B%22Payload%22%3A%7B%22Activity%22%3A%22Commented%22%2C%22Age%22%3A' + age + '%2C%22Categories%22%3A%5B%7B%22Name%22%3A%22all%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoveryCategory%22%7D%5D%2C%22LimitToContributors%22%3A%5B%22Editor%22%2C%22Staff%22%2C%22Trusted%22%2C%22Standard%22%5D%2C%22MaximumNumberOfDiscoveries%22%3A' + totalArticles + '%2C%22ObjectType%22%3A%22Requests.Discovery.DiscoverContentActionRequest%22%2C%22Sections%22%3A%5B%7B%22Name%22%3A%22world%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22canada%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22politics%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22business%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22health%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22arts%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%2C%7B%22Name%22%3A%22technology%22%2C%22ObjectType%22%3A%22Models.Discovery.DiscoverySection%22%7D%5D%2C%22Type%22%3A%22Article%22%7D%2C%22PayloadType%22%3A%22Requests.Discovery.DiscoverContentActionRequest%22%7D%5D%2C%22Metadata%22%3Anull%2C%22ObjectType%22%3A%22Requests.RequestBatch%22%7D',
@@ -36,14 +36,13 @@
       $.each(body.Envelopes[0].Payload.DiscoveredContent, function(i, article) {
         var $element = $([
           '<div class="article">',
-            '<div class="title clearfix">',
-              '<span class="meta">' + article.Comments.NumberOfComments + ' comments</span>',
-              '<h2 class="body"><a href="' + article.Url + '">' + article.Title + '</a></h2>',
-            '</div>',
-            '<div class="comment clearfix loading"></div>',
+            '<h2><a href="' + article.Url + '">' + article.Title + '</a></h2>',
+            '<div class="meta"></div>',
+            '<div class="comment loading"></div>',
           '</div>',
         ].join("\n"));
         $('#articles').append($element);
+        var $meta = $element.find('.meta');
         var $comment = $element.find('.comment');
         var key = article.ArticleKey.Key;
         var order = 'Ascending';
@@ -61,16 +60,15 @@
         .done(function(body) {
           var date = new Date(body.Envelopes[0].Payload.Items[0].PostedAtTime.split('|')[1]);
           var months = ['Jan','Feb','March','April','May','June','July', 'August', 'Sept', 'Oct', 'Nov', 'Dec'];
-          var comment = [
-            '<div class="meta">',
-              '<div class="score">',
-                '<span class="positive">+' + body.Envelopes[0].Payload.Items[0].ScoreData.PositiveScore + '</span> / <span class="negative">-' + body.Envelopes[0].Payload.Items[0].ScoreData.NegativeScore + '</span>',
-              '</div>',
-              '<div class="posted">' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</div>',
-            '</div>',
-            '<div class="body">' + body.Envelopes[0].Payload.Items[0].Body + '</div>',
-          ].join("\n");
-          $comment.append(comment);
+          var meta = [
+            '<span class="score">',
+              '<span class="positive">+' + body.Envelopes[0].Payload.Items[0].ScoreData.PositiveScore + '</span> / <span class="negative">-' + body.Envelopes[0].Payload.Items[0].ScoreData.NegativeScore + '</span>',
+            '</span>',
+            '<span class="comments">' + body.Envelopes[0].Payload.Items[0].Parent.Comments.NumberOfComments + ' comments</span>',
+            '<span class="posted">' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</span>',
+          ].join('');
+          $meta.append(meta);
+          $comment.append(body.Envelopes[0].Payload.Items[0].Body);
         });
       });
     });
