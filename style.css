@@ -33,7 +33,7 @@ h2 {
   }
   h1 {
     line-height: 0.5em;
-    margin-top: 1em;
+    margin: 1em 0 1em 0;
   }
   h2 {
     white-space: normal;
