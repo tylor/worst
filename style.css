@@ -1,6 +1,12 @@
+html {
+  /* http://subtlepatterns.com/p6/ */
+  background: url('p6.png');
+}
+
 body {
   font-family: "Helvetica Neue", "Helvetica", arial, sans-serif;
   background: #fff;
+  background: rgba(255,255,255,0.5);
   max-width: 490px;
   margin: 0 auto;
   padding: 0 8px 5em;
@@ -9,7 +15,8 @@ h1 {
   text-align: center;
   color: #125379;
   font-size: 2.3em;
-  margin: 1.5em 0 2em 0;
+  margin: 0;
+  padding: 1.5em 0 2em 0;
 }
 h2 {
   font-size: 1em;
