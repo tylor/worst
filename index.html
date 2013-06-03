@@ -11,7 +11,7 @@
     </h1>
     <div id="bookmarklet">
       <p>Sort CBC comments by downvotes using this handy bookmarklet, simply drag it to your bookmarks bar:</p>
-      <a draggable="true" href="javascript:alert('hi!');">CBC Downvoted</a>
+      <a draggable="true" href='javascript:(function(){var e=document.querySelectorAll(".cbccomments")[0].id;var t=CBC.APP.Instances.get(e);var n=[];var r={number_of_items:0,number_of_pages:0,number_per_page:10,current_page:1,anchor:"",sort:0};t.browseComments=function(e){t.initLoadingState();n=[];t.formLowestRatedCommentsRequest({onpage:e.onpage?e.onpage:1,sort:e.sort?e.sort:r.sort,number_per_page:e.number_per_page?e.number_per_page:r.number_per_page});PluckSDK.SendRequests(n,function(n){"OK"==n[0].ResponseStatus.StatusCode?(t.terminateLoadingState(),t.drawComments(n[0]),t.updateNodesHeight()):t.browseComments(e)})};t.formLowestRatedCommentsRequest=function(t){t&&t.onpage&&(r.current_page=t.onpage);t&&t.number_per_page&&(r.number_per_page=t.number_per_page);t&&t.sort&&!t.threadpath&&(r.sort=t.sort);t=new PluckSDK.CommentsPageRequest({ItemsPerPage:t&&t.replies_per_page?t.replies_per_page:r.number_per_page,CommentedOnKey:new PluckSDK.ExternalResourceKey({Key:e.replace("sm_","")}),OneBasedOnPage:r.current_page,SortType:new PluckSDK.ScoreSort({ScoreId:"Thumbs",ScoreSortColumn:PluckSDK.ScoreSortColumn.DeltaScore,SortOrder:PluckSDK.SortOrder.Ascending}),FilterType:new PluckSDK.ThreadFilter({ThreadPath:t&&t.threadpath?t.threadpath:"/"})});n.push(t)};t.browseComments({onpage:1,sort:0})})();'>CBC Downvoted</a>
     </div>
     <div id="articles" class="loading">
     </div>
